@@ -1,8 +1,11 @@
-import { HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http';
+import { HttpContextToken, HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { catchError, throwError } from 'rxjs';
 
 import { ToastService } from './toast.service';
+
+/** Set on requests whose screen shows the error itself, such as live previews. */
+export const SILENT_ERRORS = new HttpContextToken<boolean>(() => false);
 
 /** RFC 7807 body both APIs send on errors. */
 export interface Problem {
@@ -16,7 +19,9 @@ export const problemInterceptor: HttpInterceptorFn = (request, next) => {
   const toasts = inject(ToastService);
   return next(request).pipe(
     catchError((error: HttpErrorResponse) => {
-      toasts.error(describe(error));
+      if (!request.context.get(SILENT_ERRORS)) {
+        toasts.error(describe(error));
+      }
       return throwError(() => error);
     }),
   );

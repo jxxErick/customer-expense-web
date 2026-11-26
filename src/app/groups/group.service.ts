@@ -1,7 +1,8 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpContext, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 
+import { SILENT_ERRORS } from '../core/problem.interceptor';
 import { environment } from '../../environments/environment';
 import {
   ActivityFeed,
@@ -10,6 +11,8 @@ import {
   Expense,
   Group,
   Member,
+  ReceiptPreview,
+  ReceiptSplit,
   Settlement,
   SpendingReport,
   Transfer,
@@ -46,6 +49,17 @@ export class GroupService {
 
   addExpense(groupId: number, request: CreateExpense): Observable<Expense> {
     return this.http.post<Expense>(`${this.url}/${groupId}/expenses`, request);
+  }
+
+  /** Errors stay on the screen instead of a toast: the preview runs while the user types. */
+  previewReceipt(groupId: number, request: ReceiptSplit): Observable<ReceiptPreview> {
+    return this.http.post<ReceiptPreview>(`${this.url}/${groupId}/expenses/receipt/preview`, request, {
+      context: new HttpContext().set(SILENT_ERRORS, true),
+    });
+  }
+
+  addReceipt(groupId: number, request: ReceiptSplit): Observable<Expense> {
+    return this.http.post<Expense>(`${this.url}/${groupId}/expenses/receipt`, request);
   }
 
   deleteExpense(groupId: number, expenseId: number): Observable<void> {

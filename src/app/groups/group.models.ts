@@ -40,6 +40,40 @@ export interface CreateExpense {
   exchangeRate?: number | null;
 }
 
+export interface ReceiptItem {
+  description: string;
+  unitPrice: number;
+  quantity: number;
+  memberIds: number[];
+}
+
+export interface ReceiptSplit {
+  description: string;
+  payerId: number;
+  category: ExpenseCategory;
+  spentAt: string | null;
+  items: ReceiptItem[];
+  serviceChargePercent: number | null;
+  discount: number | null;
+}
+
+export interface MemberBill {
+  memberId: number;
+  name: string;
+  subtotal: number;
+  serviceCharge: number;
+  discount: number;
+  total: number;
+}
+
+export interface ReceiptPreview {
+  subtotal: number;
+  serviceCharge: number;
+  discount: number;
+  total: number;
+  members: MemberBill[];
+}
+
 export interface Balance {
   memberId: number;
   memberName: string;

@@ -5,11 +5,12 @@ import { ActivityPanelComponent } from './panels/activity-panel.component';
 import { BalancePanelComponent } from './panels/balance-panel.component';
 import { ExpensePanelComponent } from './panels/expense-panel.component';
 import { MemberPanelComponent } from './panels/member-panel.component';
+import { ReceiptPanelComponent } from './panels/receipt-panel.component';
 import { ReportPanelComponent } from './panels/report-panel.component';
 import { Group } from './group.models';
 import { GroupService } from './group.service';
 
-type Tab = 'expenses' | 'balances' | 'members' | 'activity' | 'report';
+type Tab = 'expenses' | 'receipt' | 'balances' | 'members' | 'activity' | 'report';
 
 @Component({
   selector: 'app-group-detail',
@@ -20,6 +21,7 @@ type Tab = 'expenses' | 'balances' | 'members' | 'activity' | 'report';
     BalancePanelComponent,
     MemberPanelComponent,
     ActivityPanelComponent,
+    ReceiptPanelComponent,
     ReportPanelComponent,
   ],
   template: `
@@ -37,6 +39,7 @@ type Tab = 'expenses' | 'balances' | 'members' | 'activity' | 'report';
     @if (group(); as g) {
       @switch (tab()) {
         @case ('expenses') { <app-expense-panel [group]="g" /> }
+        @case ('receipt') { <app-receipt-panel [group]="g" (saved)="tab.set('expenses')" /> }
         @case ('balances') { <app-balance-panel [group]="g" /> }
         @case ('members') { <app-member-panel [group]="g" (changed)="reload()" /> }
         @case ('activity') { <app-activity-panel [group]="g" /> }
@@ -52,6 +55,7 @@ export class GroupDetailComponent implements OnInit {
 
   protected readonly tabs: { id: Tab; label: string }[] = [
     { id: 'expenses', label: 'Despesas' },
+    { id: 'receipt', label: 'Comanda' },
     { id: 'balances', label: 'Saldos e acertos' },
     { id: 'members', label: 'Membros' },
     { id: 'activity', label: 'Atividade' },
