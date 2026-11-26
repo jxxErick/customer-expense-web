@@ -141,3 +141,22 @@ dd { margin: 0; }
 }
 .toast.success { background: var(--success); }
 .toast.error { background: var(--danger); }
+
+.receipt-item { display: grid; gap: .5rem; padding: .75rem; background: var(--bg); border-radius: 8px; }
+.receipt-line { display: grid; grid-template-columns: minmax(0, 1fr) 100px 64px auto; gap: .5rem; align-items: center; }
+.chips { display: flex; flex-wrap: wrap; gap: .35rem; align-items: center; }
+.chip {
+  background: var(--surface); color: var(--muted); border: 1px solid var(--border);
+  border-radius: 999px; padding: .2rem .7rem; font-size: .85rem;
+}
+.chip.on { background: var(--primary-soft); color: var(--primary); border-color: var(--primary); font-weight: 600; }
+button.full { width: 100%; margin-top: 1rem; }
+.form .row input { min-width: 0; }
+.bill-row { display: flex; justify-content: space-between; gap: .75rem; align-items: center; padding: .5rem 0; border-bottom: 1px solid var(--border); }
+.bill-summary { margin-top: .75rem; dd { text-align: right; } }
+
+@media (max-width: 640px) {
+  .receipt-line { grid-template-columns: 1fr 64px; }
+  .receipt-line input:first-child { grid-column: 1 / -1; }
+  .receipt-line .link { grid-column: 1 / -1; justify-self: end; }
+}
