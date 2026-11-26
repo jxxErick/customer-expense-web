@@ -39,6 +39,7 @@ code { background: var(--bg); padding: 0 4px; border-radius: 4px; }
 .brand { font-weight: 700; color: var(--text); span { color: var(--primary); } }
 
 .container { max-width: 1120px; margin: 0 auto; padding: 1.5rem 2rem 4rem; display: grid; gap: 1rem; }
+.container > * { min-width: 0; }
 .page-head { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
 .actions, .section-head { display: flex; gap: .5rem; align-items: center; }
 .section-head { justify-content: space-between; h3 { margin: 0; } margin-bottom: .75rem; }
